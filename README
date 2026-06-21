@@ -1,0 +1,87 @@
+# NetBuddy — Cybersecurity Awareness Chatbot (PROG6221 POE)
+
+A WPF desktop application that teaches South African citizens about cybersecurity
+through an interactive chatbot. Built incrementally across three parts, culminating
+in a task assistant, a quiz mini-game, NLP command recognition, and an activity log.
+
+**Student:** [Your Name] — [Your Student Number]
+**Module:** Programming 2A (PROG6221)
+
+---
+
+
+## Features
+
+**Chatbot (Parts 1 & 2)**
+- Voice greeting (WAV) and ASCII art logo
+- Personalised greeting using the user's name
+- Keyword recognition for cybersecurity topics (passwords, phishing, malware, VPNs, etc.)
+- Random responses for variety
+- Conversation flow with follow-up handling ("tell me more")
+- Memory of the user's name and favourite topic
+- Sentiment detection (worried, curious, frustrated, confused)
+
+**Part 3 / POE**
+- **Task Assistant** — add, complete and delete cybersecurity tasks, stored in SQL Server LocalDB (full CRUD)
+- **Reminders** — set a date *and* time; the app pops up an alert when a reminder is due
+- **Quiz Mini-Game** — 12 questions (multiple-choice + true/false), seeded into and loaded from the database, with scoring and feedback
+- **NLP Simulation** — understands varied phrasings ("remind me to update my password tomorrow") and routes them to the right feature
+- **Activity Log** — records actions with timestamps and updates live; shows recent actions with a "Show More" option
+- Separate **Quiz** and **Activity Log** windows
+
+---
+
+## Requirements
+- Windows
+- .NET 10 SDK
+- Visual Studio 2022
+- SQL Server LocalDB (installed with Visual Studio)
+
+NuGet packages restore automatically on build:
+- `Microsoft.Data.SqlClient`
+
+---
+
+## How to Run
+1. Clone the repository.
+2. Open `Prog POE Part 2.slnx` in Visual Studio.
+3. Make sure SQL Server LocalDB is available (`(localdb)\MSSQLLocalDB`).
+4. Press **F5**. On first run the app automatically creates the `netbuddy`
+   database, the `tasks` and `quiz_questions` tables, and seeds the quiz questions.
+5. Enter your name when prompted, then use the Chat / Tasks tabs and the
+   Play Quiz Game / View Activity Log buttons.
+
+No manual database setup is needed — the app creates and seeds everything on launch.
+
+---
+
+## Database
+The app uses **SQL Server LocalDB** with Windows Authentication (no password needed).
+- `tasks` — id, title, description, reminder_date, is_completed, created_at
+- `quiz_questions` — id, question, options, correct_index, explanation, is_true_false
+
+---
+
+## Continuous Integration
+GitHub Actions builds the project on every push (restore + build in Release on a Windows runner).
+
+![CI Build Passing](docs/ci-success.png)
+
+---
+
+## Project Structure
+- `MainWindow` — chat + tasks UI, reminder pop-ups
+- `GameWindow` — quiz window
+- `LogWindow` — activity log window
+- `Chatbot` — core logic, routes input to the right feature
+- `DatabaseService` — LocalDB CRUD + quiz seeding
+- `QuizService`, `NlpService`, `ActivityLogService`, `MemoryService`, `SentimentService`, `ResponseService`
+
+---
+
+## References
+Freeman, E. and Robson, E. (2020) *Head First Design Patterns*. 2nd edn. O'Reilly Media.
+Martin, R.C. (2009) *Clean Code*. Prentice Hall.
+Microsoft (2024) *.NET documentation*. Available at: https://learn.microsoft.com/ (Accessed: 21 June 2026).
+Microsoft (2024) *SqlClient documentation*. Available at: https://learn.microsoft.com/en-us/sql/connect/ado-net/ (Accessed: 21 June 2026).
+Troelsen, A. and Japikse, P. (2022) *Pro C# 10 with .NET 6*. 11th edn. Apress.
