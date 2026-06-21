@@ -1,0 +1,20 @@
+# Build folders
+bin/
+obj/
+
+# Visual Studio files
+.vs/
+*.user
+*.suo
+
+# Rider
+.idea/
+
+# ReSharper
+_ReSharper*/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp

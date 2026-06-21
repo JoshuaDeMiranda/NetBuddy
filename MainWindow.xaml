@@ -1,0 +1,174 @@
+﻿<Window x:Class="Prog_POE_Part_2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="NetBuddy - Cybersecurity Assistant"
+        Height="650" Width="1000"
+        WindowState="Maximized"
+        WindowStartupLocation="CenterScreen"
+        Background="#1E1E2E"
+        Loaded="Window_Loaded">
+
+    <Window.Resources>
+        <Style x:Key="ActionButton" TargetType="Button">
+            <Setter Property="Background" Value="#4CAF50"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="10,6"/>
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style x:Key="SecondaryButton" TargetType="Button" BasedOn="{StaticResource ActionButton}">
+            <Setter Property="Background" Value="#2196F3"/>
+        </Style>
+        <Style x:Key="DangerButton" TargetType="Button" BasedOn="{StaticResource ActionButton}">
+            <Setter Property="Background" Value="#E53935"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0" Margin="10">
+            <TextBlock Text="NETBUDDY" FontSize="28" FontWeight="Bold"
+                       Foreground="Cyan" HorizontalAlignment="Center" Margin="0,10"/>
+            <TextBlock Text="Cybersecurity Awareness Assistant"
+                       Foreground="LightGray" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+            <TextBlock FontFamily="Consolas" FontSize="16" Foreground="Magenta"
+                       TextAlignment="Center" HorizontalAlignment="Center"
+                       Margin="0,20" xml:space="preserve">
+  [ NETBUDDY BOT ]
+ .-""-.
+ | o  o |
+ |  --  |
+ | ---- |
+ /|______|\
+  /    \
+            </TextBlock>
+
+            <Border Background="#2B2B3C" Padding="12" CornerRadius="10" Margin="0,10">
+                <TextBlock Text="Ask me about:
+- Password safety
+- Phishing scams
+- Malware
+- VPNs
+- Online safety
+
+Or try:
+- Add a task to enable 2FA
+- Start the quiz
+- Show activity log"
+                           Foreground="White" FontSize="12"/>
+            </Border>
+
+            <Button Content="Play Quiz Game" Style="{StaticResource ActionButton}"
+                    Click="PlayQuizButton_Click" Margin="0,12,0,0"/>
+            <Button Content="View Activity Log" Style="{StaticResource SecondaryButton}"
+                    Click="ViewLogButton_Click" Margin="0,4,0,0"/>
+        </StackPanel>
+
+        <TabControl x:Name="MainTabs" Grid.Column="1" Margin="10"
+                    Background="#2B2B3C" BorderThickness="0">
+
+            <TabItem Header="Chat">
+                <Grid Margin="6">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <ListBox x:Name="ChatBox" Grid.Row="0"
+                             Background="#2B2B3C" Foreground="White"
+                             FontSize="14" Padding="10" BorderThickness="0">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Padding" Value="5"/>
+                                <Setter Property="Margin" Value="2"/>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
+
+                    <Border Grid.Row="1" Background="#2B2B3C" CornerRadius="10" Padding="8" Margin="0,10,0,0">
+                        <DockPanel LastChildFill="True">
+                            <Button Content="Send" Style="{StaticResource ActionButton}"
+                                    Click="SendButton_Click" Width="90" DockPanel.Dock="Right"/>
+                            <Button Content="Help" Style="{StaticResource SecondaryButton}"
+                                    Click="HelpButton_Click" Width="90" DockPanel.Dock="Right"/>
+                            <TextBox x:Name="InputBox" FontSize="14" Padding="8"
+                                     BorderThickness="0" Background="#1E1E2E" Foreground="White"
+                                     MinWidth="300" KeyDown="InputBox_KeyDown"/>
+                        </DockPanel>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Tasks">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="Cybersecurity Task Assistant"
+                               FontSize="18" FontWeight="Bold" Foreground="Cyan" Margin="0,0,0,10"/>
+
+                    <StackPanel Grid.Row="1" Margin="0,0,0,10">
+                        <TextBlock Text="Title" Foreground="LightGray"/>
+                        <TextBox x:Name="TaskTitleBox" Background="#1E1E2E" Foreground="White"
+                                 BorderThickness="0" Padding="6" Margin="0,2,0,8"/>
+                        <TextBlock Text="Description" Foreground="LightGray"/>
+                        <TextBox x:Name="TaskDescBox" Background="#1E1E2E" Foreground="White"
+                                 BorderThickness="0" Padding="6" Margin="0,2,0,8"
+                                 TextWrapping="Wrap" Height="50" AcceptsReturn="True"/>
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox x:Name="ReminderCheck" Content="Set reminder for:"
+                                      Foreground="LightGray" VerticalAlignment="Center"/>
+                            <DatePicker x:Name="ReminderDate" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="at" Foreground="LightGray"
+                                       VerticalAlignment="Center" Margin="8,0,4,0"/>
+                            <ComboBox x:Name="ReminderHour" Width="55" VerticalAlignment="Center"/>
+                            <TextBlock Text=":" Foreground="LightGray"
+                                       VerticalAlignment="Center" Margin="2,0,2,0"/>
+                            <ComboBox x:Name="ReminderMinute" Width="55" VerticalAlignment="Center"/>
+                            <Button Content="Add Task" Style="{StaticResource ActionButton}"
+                                    Click="AddTaskButton_Click" Margin="12,0,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <DataGrid x:Name="TasksGrid" Grid.Row="2"
+                              AutoGenerateColumns="False" IsReadOnly="True"
+                              Background="#1E1E2E" Foreground="Black"
+                              HeadersVisibility="Column" GridLinesVisibility="Horizontal"
+                              CanUserAddRows="False" SelectionMode="Single">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="*"/>
+                            <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="2*"/>
+                            <DataGridTextColumn Header="Reminder" Binding="{Binding ReminderDisplay}" Width="Auto"/>
+                            <DataGridTextColumn Header="Status" Binding="{Binding StatusDisplay}" Width="Auto"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,8,0,0">
+                        <Button Content="Mark Complete" Style="{StaticResource SecondaryButton}"
+                                Click="CompleteTaskButton_Click"/>
+                        <Button Content="Delete" Style="{StaticResource DangerButton}"
+                                Click="DeleteTaskButton_Click"/>
+                        <Button Content="Refresh" Style="{StaticResource ActionButton}"
+                                Click="RefreshTasksButton_Click"/>
+                    </StackPanel>
+
+                    <TextBlock x:Name="DbStatusText" Grid.Row="4"
+                               Foreground="#FF8A80" TextWrapping="Wrap" Margin="0,8,0,0"/>
+                </Grid>
+            </TabItem>
+
+        </TabControl>
+    </Grid>
+</Window>
